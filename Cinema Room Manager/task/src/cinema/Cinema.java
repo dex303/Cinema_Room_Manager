@@ -4,6 +4,6 @@ public class Cinema {
 
     public static void main(String[] args) {
         Seats seats = new Seats();
-        seats.view();
+        seats.income();
     }
 }

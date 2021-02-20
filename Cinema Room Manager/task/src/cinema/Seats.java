@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Seats {
     private final int ROWS;
     private final int COLUMNS;
+    String[][] reservedSeats;
 
     public Seats() {
         Scanner scanner = new Scanner(System.in);
@@ -12,6 +13,12 @@ public class Seats {
         ROWS = scanner.nextInt();
         System.out.println("Enter the number of seats in each row:");
         COLUMNS = scanner.nextInt();
+        reservedSeats = new String[ROWS][COLUMNS];
+        for (int a = 0; a < reservedSeats.length; a++) {
+            for (int b = 0; b < reservedSeats[0].length; b++) {
+                reservedSeats[a][b] = "S";
+            }
+        }
         System.out.println();
     }
 
@@ -32,9 +39,9 @@ public class Seats {
         System.out.println("Total income:\n$" + income);
     }
 
-    public void view(int seatRow, int seatCol) {
+    public void view() {
         System.out.print("Cinema:\n  ");
-        for (int i = 1; i <= COLUMNS; i ++) {
+        for (int i = 1; i <= COLUMNS; i++) {
             System.out.print(i + " ");
         }
         System.out.println();
@@ -42,11 +49,7 @@ public class Seats {
         for (int j = 0; j < ROWS; j++) {
             System.out.print(j + 1 + " ");
             for (int k = 0; k < COLUMNS; k++) {
-                if (j == seatRow - 1 && k == seatCol - 1) {
-                    System.out.print("B ");
-                } else {
-                    System.out.print("S ");
-                }
+                System.out.print(reservedSeats[j][k] + " ");
             }
             System.out.println();
         }
@@ -63,15 +66,22 @@ public class Seats {
         System.out.println("Enter a seat number in that row:");
         seatCol = scanner.nextInt();
 
-        if (ROWS * COLUMNS <= 60) {
-            ticketPrice = 10;
-        } else if (seatRow <= ROWS / 2) {
-            ticketPrice = 10;
+        if (reservedSeats[seatRow - 1][seatCol - 1].equals("B")) {
+            System.out.println("This seat is already reserved, please choose another one.");
+            priceForSeat();
         } else {
-            ticketPrice = 8;
-        }
+            reservedSeats[seatRow - 1][seatCol - 1] = "B";
 
-        System.out.println("\nTicket price: $" + ticketPrice);
-        view(seatRow, seatCol);
+            if (ROWS * COLUMNS <= 60) {
+                ticketPrice = 10;
+            } else if (seatRow <= ROWS / 2) {
+                ticketPrice = 10;
+            } else {
+                ticketPrice = 8;
+            }
+
+            System.out.println("\nTicket price: $" + ticketPrice);
+            System.out.println();
+        }
     }
 }

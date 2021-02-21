@@ -98,8 +98,7 @@ public class Seats {
 
     public void stats() {
         System.out.println("Number of purchased tickets: " + soldTickets);
-        double percentageOfSoldTickets = (double) soldTickets / (ROWS * COLUMNS) * 10000;
-        percentageOfSoldTickets = Math.round(percentageOfSoldTickets) / 100.0;
+        double percentageOfSoldTickets = (double) soldTickets / (ROWS * COLUMNS) * 100;
         System.out.format("Percentage:% .2f%%\n", percentageOfSoldTickets);
         System.out.println("Current income: $" + currentIncome);
         income();

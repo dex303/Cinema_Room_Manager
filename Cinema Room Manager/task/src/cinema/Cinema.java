@@ -10,7 +10,7 @@ public class Cinema {
         boolean again = true;
 
         while (again) {
-            System.out.println("1. Show the seats\n2. Buy a ticket\n0. Exit");
+            System.out.println("1. Show the seats\n2. Buy a ticket\n3. Statistics\n0. Exit");
             switch (scanner.nextInt()) {
                 case 0:
                     again = false;
@@ -20,6 +20,9 @@ public class Cinema {
                     break;
                 case 2:
                     seats.priceForSeat();
+                    break;
+                case 3:
+                    seats.stats();
                     break;
             }
         }

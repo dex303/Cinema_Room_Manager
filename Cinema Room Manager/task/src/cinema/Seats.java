@@ -6,6 +6,8 @@ public class Seats {
     private final int ROWS;
     private final int COLUMNS;
     String[][] reservedSeats;
+    private int soldTickets = 0;
+    private int currentIncome = 0;
 
     public Seats() {
         Scanner scanner = new Scanner(System.in);
@@ -36,7 +38,7 @@ public class Seats {
             System.out.println(ROWS / 2);
             System.out.println(ROWS - ROWS / 2);
         }
-        System.out.println("Total income:\n$" + income);
+        System.out.println("Total income: $" + income);
     }
 
     public void view() {
@@ -66,11 +68,19 @@ public class Seats {
         System.out.println("Enter a seat number in that row:");
         seatCol = scanner.nextInt();
 
-        if (reservedSeats[seatRow - 1][seatCol - 1].equals("B")) {
-            System.out.println("This seat is already reserved, please choose another one.");
+        boolean isRowRight = seatRow < 0 || seatRow > ROWS;
+        boolean isColRight = seatCol < 0 || seatCol > COLUMNS;
+        if (isRowRight || isColRight) {
+            System.out.println("Wrong input!");
+            System.out.println();
+            priceForSeat();
+        } else if (reservedSeats[seatRow - 1][seatCol - 1].equals("B")) {
+            System.out.println("That ticket has already been purchased!");
+            System.out.println();
             priceForSeat();
         } else {
             reservedSeats[seatRow - 1][seatCol - 1] = "B";
+            soldTickets++;
 
             if (ROWS * COLUMNS <= 60) {
                 ticketPrice = 10;
@@ -80,8 +90,19 @@ public class Seats {
                 ticketPrice = 8;
             }
 
+            currentIncome += ticketPrice;
             System.out.println("\nTicket price: $" + ticketPrice);
             System.out.println();
         }
+    }
+
+    public void stats() {
+        System.out.println("Number of purchased tickets: " + soldTickets);
+        double percentageOfSoldTickets = (double) soldTickets / (ROWS * COLUMNS) * 10000;
+        percentageOfSoldTickets = Math.round(percentageOfSoldTickets) / 100.0;
+        System.out.format("Percentage:% .2f%%\n", percentageOfSoldTickets);
+        System.out.println("Current income: $" + currentIncome);
+        income();
+        System.out.println();
     }
 }
